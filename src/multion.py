@@ -3,6 +3,7 @@
 
 import os
 from multion.client import MultiOn
+from mem0 import Memory
 
 class MultiOnUtils:
     def __init__(self):
@@ -44,7 +45,8 @@ class MultiOnUtils:
         )
 
         data = retrieve_response.data
-        # print(data)
+        # print("MEM0_1")
+        self.memorize_user_data(data)
 
         return data
     
@@ -99,15 +101,21 @@ class MultiOnUtils:
         print(retrieve_response.data)
         data = retrieve_response.data
 
-        self.memorize_user_data(data)
         return data
 
     def memorize_user_data(self, data):
         USER_DATA = f"""
-            I visited that page {data[0]['url']} of {data[0]['object']}
-            And I want to know more about these people {data[0]['people']}
-            I'd love to connect more with these companies {data[0]['companies']}
-            And I'd love to work on problems/technologies {data[0]['technologies']}
-            It's in {data[0]['venue']} on {data[0]['date']}
+            I visited that page {data[0]['url']} of {data[0]['object']},
+            And I want to know more about these people {data[0]['people']},
+            I'd love to connect more with these companies {data[0]['companies']},
+            And I'd love to work on problems/technologies {data[0]['technologies']},
+            It's in {data[0]['venue']} on {data[0]['date']},
         """
-        print(USER_DATA)
+        # print("MEM0_2")
+        m = Memory()
+        memory = m.add(USER_DATA, user_id="rob", metadata={"category": "career interests"})
+        print(memory)
+        # print("MEM0_3")
+
+        all_memories = m.get_all()
+        print(all_memories)
