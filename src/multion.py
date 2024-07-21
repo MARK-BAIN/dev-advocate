@@ -26,10 +26,10 @@ class MultiOnUtils:
 
         retrieve_response = client.retrieve(
             url=os.environ.get("EVENT_WEBSITE"),
-            cmd="For the event, get its: name, date, venue, judges, sponsors, prizes",
-            fields=["website_url", "name", "date", "venue", "judges", "sponsors", "prizes"]
+            cmd="For the event, get its: name, date, venue, people, companies, technologies",
+            fields=["url", "name", "date", "venue", "people", "companies", "technologies"]
         )
 
         data = retrieve_response.data
-        print(data)
+        # print(data)
         return data

@@ -7,7 +7,7 @@ import requests
 
 load_dotenv()
 
-def main():
+def main(data):
     prompt_id = "7c87dade-902c-4519-bf56-9535bb065cb6"
     api_key = os.environ.get("WORDWARE_API_KEY") # Get your API key from https://app.wordware.ai/account/api-keys
 
@@ -20,9 +20,11 @@ def main():
     r = requests.post(f"https://app.wordware.ai/api/prompt/{prompt_id}/run",
                       json={
                           "inputs": {
-                              "topic": "sugary cereal",
+                              "event_page_data": f"""
+                                {data}
+                              """,
                               # Image inputs have a different format and require a publicly accessible URL
-															"image": {
+							  "image": {
                                   "type": "image",
                                   "image_url": "https://i.insider.com/602ee9ced3ad27001837f2ac",
                               },
