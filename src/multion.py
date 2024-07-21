@@ -10,6 +10,9 @@ class MultiOnUtils:
         self.agentops_api_key = os.environ.get("AGENTOPS_API_KEY")  # Get your API key from https://app.agentops.ai/settings/projects
         if not self.multion_api_key:
             raise ValueError("MULTION_API_KEY is not set in .env variables")
+
+        self.scrapper_fields = ["url", "object", "name", "date", "venue", "people", "companies", "technologies"]
+
     def visit_event_website(self):
         client = MultiOn(api_key=self.multion_api_key, agentops_api_key=self.agentops_api_key)
 
@@ -25,13 +28,24 @@ class MultiOnUtils:
         client = MultiOn(api_key=self.multion_api_key, agentops_api_key=self.agentops_api_key)
 
         retrieve_response = client.retrieve(
-            event_url= "https://lu.ma/ai-agents-2.0?tk=5epBFf",
-            cmd="For the event, get its: name, date, venue, people, companies, technologies",
-            fields=["event_url", "name", "date", "venue", "people", "companies", "technologies"]
+            url= "https://lu.ma/ai-agents-2.0?tk=5epBFf",
+            cmd="""
+                For the page, get its: 
+                    - url,
+                    - type of object it is like article/event/course, 
+                    - name,
+                    - date,
+                    - venue (if applicable), 
+                    - people,
+                    - companies, 
+                    - Major technologies/problems
+            """,
+            fields=self.scrapper_fields
         )
 
         data = retrieve_response.data
         # print(data)
+
         return data
     
     def scrap_linkedin(self, session_id):
@@ -39,7 +53,7 @@ class MultiOnUtils:
         create_response = client.sessions.create(
         url="https://linkedin.com",
         local=True
-)
+    )
 
         session_id = create_response.session_id
         status = "CONTINUE"
@@ -60,10 +74,11 @@ class MultiOnUtils:
             scroll_to_bottom=True,
             render_js=True
         )
+
         print(retrieve_response.data[0])
         data = retrieve_response.data[0]
+
         return data
-        
 
     def scrap_github(self, session_id):
         client = MultiOn(api_key=self.multion_api_key, agentops_api_key=self.agentops_api_key)
@@ -74,14 +89,25 @@ class MultiOnUtils:
 
         session_id = create_response.session_id
         retrieve_response = client.retrieve(
-        session_id=session_id,
-        cmd="Get name, location, number of repositories, count of contributions in the last year, followers and following count.",
-        fields=["name", "location", "pulbic_repositories", "last_year_contributions_count", "github_followers_count", "github_following_count"],
-        scroll_to_bottom=True,
-        render_js=True
+            session_id=session_id,
+            cmd="Get name, location, number of repositories, count of contributions in the last year, followers and following count.",
+            fields=["name", "location", "pulbic_repositories", "last_year_contributions_count", "github_followers_count", "github_following_count"],
+            scroll_to_bottom=True,
+            render_js=True
         )
-        print(retrieve_response.data)
 
+        print(retrieve_response.data)
         data = retrieve_response.data
 
+        self.memorize_user_data(data)
         return data
+
+    def memorize_user_data(self, data):
+        USER_DATA = f"""
+            I visited that page {data[0]['url']} of {data[0]['object']}
+            And I want to know more about these people {data[0]['people']}
+            I'd love to connect more with these companies {data[0]['companies']}
+            And I'd love to work on problems/technologies {data[0]['technologies']}
+            It's in {data[0]['venue']} on {data[0]['date']}
+        """
+        print(USER_DATA)

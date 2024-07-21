@@ -28,16 +28,14 @@ def main():
         2. We assume a use case where the user wants to learn about people, companies, technologies/problems
         3. We use MultiOn to access private (behind auth) data of the human-in-control user
         4. Multi on Pulls data from intended sources, like Github, LinkedIn, ...
-        5. We store pulled data/memories in Mem0
+        5. We store accessed data/memories in Mem0
 
         Input: text prompt
         Output: Mem0 data
     """
-    # multionscrapper = multion.MultiOnUtils()
-    # session_id = multionscrapper.visit_event_website()
-    # retrieve_response = multionscrapper.scrap_website(session_id)
-    retrieve_response = [{'website_url': 'https://lu.ma/founders-bay?k=c', 'name': 'AI Agents 2.0: Agents That Work. Hackathon by MultiOn & AgentOps', 'date': 'July 20', 'venue': 'San Francisco, California', 'people': ['Mariane Bekker', 'Div garg', 'Jeremiah Owyang', 'Michelle Gee', 'Alex Reibman', 'Alicia Lin', 'Margarita Groisman', 'Jeremy Nixon', 'Steven Echtman'], 'companies': ['MultiOn', 'AgentOps', 'Founders Bay', 'Arize AI', 'Aiify.io Events', 'AWS', 'Groq', 'Wordware', 'CloudFlare', 'Llama Lounge', 'Llama Index', 'Mem0', 'Founders Institute', 'Anon', 'Based Hardware'], 'technologies': ['AI', 'Agents', 'MultiOn', 'AgentOps', 'AWS', 'Groq', 'Wordware', 'Anon', 'Friend AI Wearables', 'Phoenix Traces', 'Experiments', 'Mem0 API', 'Rabbit R1 AI device', 'SpeedRead', 'DoorDash', 'AI Agents', 'Llama Lounge', 'Silicon Valley Impact', 'Airtags', 'Monitors', 'Electric Scooter', 'Theragun']}]
-
+    multionscrapper = multion.MultiOnUtils()
+    session_id = multionscrapper.visit_event_website()
+    retrieve_response = multionscrapper.scrap_website(session_id)
     print(retrieve_response)
     print("Step 2 completed")
 
