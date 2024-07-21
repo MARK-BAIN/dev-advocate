@@ -36,6 +36,8 @@ def main():
     multionscrapper = multion.MultiOnUtils()
     session_id = multionscrapper.visit_event_website()
     retrieve_response = multionscrapper.scrap_website(session_id)
+    # multionscrapper.scrap_linkedin()
+    multionscrapper.scrap_github()
     print(retrieve_response)
     print("Step 2 completed")
 

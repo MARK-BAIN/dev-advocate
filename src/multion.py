@@ -50,12 +50,12 @@ class MultiOnUtils:
 
         return data
     
-    def scrap_linkedin(self, session_id):
+    def scrap_linkedin(self):
         client = MultiOn(api_key=self.multion_api_key, agentops_api_key=self.agentops_api_key)
         create_response = client.sessions.create(
         url="https://linkedin.com",
         local=True
-    )
+        )
 
         session_id = create_response.session_id
         status = "CONTINUE"
@@ -82,7 +82,7 @@ class MultiOnUtils:
 
         return data
 
-    def scrap_github(self, session_id):
+    def scrap_github(self):
         client = MultiOn(api_key=self.multion_api_key, agentops_api_key=self.agentops_api_key)
         create_response = client.sessions.create(
             url="https://github.com/areibman",
