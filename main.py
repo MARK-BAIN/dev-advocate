@@ -8,7 +8,7 @@ def main():
     """
         Layer 1/Hardware Layer
         Agent role: Your role is to listen to the human voice inputs, proof-read/correct them and return
-        Tools: Friend AI, Datagram
+        Tools: Friend AI webhook, Datagram, groq
 
         1. Human user communicates with Friend using Voice control
         2. A webhook of Friend AI is picking up the Voice commands transcribed into text
@@ -36,7 +36,7 @@ def main():
     multionscrapper = multion.MultiOnUtils()
     session_id = multionscrapper.visit_event_website()
     retrieve_response = multionscrapper.scrap_website(session_id)
-    # multionscrapper.scrap_linkedin()
+    multionscrapper.scrap_linkedin()
     multionscrapper.scrap_github()
     print(retrieve_response)
     print("Step 2 completed")
